@@ -1,0 +1,15 @@
+# C
+COLOR_ORANGE = (255, 128, 0)
+COLOR_GREEN = (128, 255, 0)
+COLOR_BLUE = (0, 0, 255)
+COLOR_RED = (255, 0, 0)
+COLOR_YELLOW = (255, 255, 0)
+COLOR_WHITE = (255, 255, 255)
+
+# m
+MENU_OPTION = ('NEW GAME ',
+                'ABOUT GAME ',
+                'EXIT')
+# W
+WIN_WIDTH = 576
+WIN_HEIGHT = 324
