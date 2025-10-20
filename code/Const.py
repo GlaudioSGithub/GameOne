@@ -1,4 +1,6 @@
 # C
+from pickle import EMPTY_TUPLE
+
 COLOR_ORANGE = (255, 128, 0)
 COLOR_GREEN = (128, 255, 0)
 COLOR_BLUE = (0, 0, 255)
@@ -6,9 +8,22 @@ COLOR_RED = (255, 0, 0)
 COLOR_YELLOW = (255, 255, 0)
 COLOR_WHITE = (255, 255, 255)
 
+# E
+ENTITY_SPEED = {
+    'Level1Bg1': 0,
+    'Level1Bg2': 1,
+    'Level1Bg3': 2,
+    'Level1Bg4': 3,
+    'Level1Bg5': 4,
+    'Level1Bg6': 5,
+    'Level1Bg7': 6
+}
+
 # m
-MENU_OPTION = ('NEW GAME ',
-                'ABOUT GAME ',
+MENU_OPTION = ( 'NEW GAME 1P',
+                'NEW GAME 2P - COOPERATIVE',
+                'NEW GAME 2P - COOPERATIVE',
+                'ABOUT GAME',
                 'EXIT')
 # W
 WIN_WIDTH = 576
