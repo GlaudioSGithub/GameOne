@@ -3,11 +3,11 @@ from abc import ABC, abstractmethod
 import pygame
 
 
-class Entity(ABC): # Classe abstrata
+class Entity(ABC):  # Classe abstrata
     def __init__(self, name: str, position: tuple):
         self.name = name
-        self.surf = pygame.image.load('./assets/img/' + name + '.png')
-        self.rect = self.surf.get_rect(left=position[0], top=position[1]) # x e y
+        self.surf = pygame.image.load('./assets/img/' + name + '.png').convert_alpha()  # Trata as imagens
+        self.rect = self.surf.get_rect(left=position[0], top=position[1])  # x e y
         self.speed = 0
 
     @abstractmethod

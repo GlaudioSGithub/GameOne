@@ -5,7 +5,7 @@ from code.Const import WIN_WIDTH
 class EntityFactory:
 
     @staticmethod
-    def get_entity(entity_name: str, position=(0,0)):
+    def get_entity(entity_name: str, position=(0, 0)):
         match entity_name:
             case "Level1Bg":
                 list_bg = []
@@ -16,4 +16,3 @@ class EntityFactory:
 
                 return list_bg
         return None
-
