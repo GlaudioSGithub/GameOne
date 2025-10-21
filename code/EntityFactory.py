@@ -1,5 +1,7 @@
 import random
 
+import pygame
+
 from code.Background import Background
 from code.Const import WIN_WIDTH, WIN_HEIGHT
 from code.Enemy import Enemy
@@ -18,11 +20,19 @@ class EntityFactory:
                     list_bg.append(Background(f'Level1Bg{i}', (0, 0)))  # Chamar as 7 imagens
                     list_bg.append(Background(f'Level1Bg{i}', (WIN_WIDTH, 0)))
                 return list_bg
-            case 'Player1':
-                return Player(f'Player1', (10, WIN_HEIGHT / 2 - 30))
-            case 'Player2':
-                return Player(f'Player2', (10, WIN_HEIGHT / 2 + 30))
-            case 'Enemy1':
-                return Enemy('Enemy1', (WIN_WIDTH + 10, random.randint(40, WIN_HEIGHT - 40)))
-            case 'Enemy2':
-                return Enemy('Enemy2', (WIN_WIDTH + 10, random.randint(40, WIN_HEIGHT - 40)))
+            # ----- PLAYERS -----
+            case "Player1":
+                return Player("Player1", (10, WIN_HEIGHT / 2 - 30))
+            case "Player2":
+                return Player("Player2", (10, WIN_HEIGHT / 2 + 30))
+
+            # ----- ENEMIES -----
+            case "Enemy1":
+                enemy = Enemy("Enemy1", (WIN_WIDTH + 10, random.randint(40, WIN_HEIGHT - 40)))
+                enemy.surf = pygame.transform.flip(enemy.surf, True, False)  # Flip horizontal
+                return enemy
+            case "Enemy2":
+                enemy = Enemy("Enemy2", (WIN_WIDTH + 10, random.randint(40, WIN_HEIGHT - 40)))
+                enemy.surf = pygame.transform.flip(enemy.surf, True, False)
+                return enemy
+        return None
