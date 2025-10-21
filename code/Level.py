@@ -6,9 +6,11 @@ from pygame import Surface, Rect
 from pygame.font import Font
 
 from code.Const import COLOR_WHITE, WIN_HEIGHT, MENU_OPTION, EVENT_ENEMY, SPAWN_TIME
+from code.Enemy import Enemy
 from code.Entity import Entity
 from code.EntityFactory import EntityFactory
 from code.EntityMediator import EntityMediator
+from code.Player import Player
 
 
 class Level:
@@ -34,8 +36,24 @@ class Level:
         while True:
             clock.tick(60)  # 60 FPS, taxa de atualização
             for ent in self.entity_list:
+                if ent is None:
+                    continue  # evita erro se houver None
+
+                ent.move()  # primeiro atualiza posição
+
+                # desenha a entidade
                 self.window.blit(source=ent.surf, dest=ent.rect)
-                ent.move()
+
+                # dispara se for jogador ou inimigo
+                if isinstance(ent, (Player, Enemy)):
+                    shot = ent.shoot()  # chama apenas uma vez
+                    if shot:
+                        # ajusta a posição do tiro para sair da frente do inimigo/jogador
+                        if isinstance(ent, Enemy):
+                            shot.rect.left = ent.rect.left - 10
+                            shot.rect.centery = ent.rect.centery
+                        self.entity_list.append(shot)
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()

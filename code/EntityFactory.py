@@ -35,4 +35,4 @@ class EntityFactory:
                 enemy = Enemy("Enemy2", (WIN_WIDTH + 10, random.randint(40, WIN_HEIGHT - 40)))
                 enemy.surf = pygame.transform.flip(enemy.surf, True, False)
                 return enemy
-        return None
+
