@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
 import os
 import pygame
-from code.Const import ENTITY_HEALTH
+from code.Const import ENTITY_HEALTH, ENTITY_DAMAGE, ENTITY_SCORE
+
 
 class Entity(ABC):
     def __init__(self, name: str, position: tuple):
@@ -19,6 +20,9 @@ class Entity(ABC):
         self.rect = self.surf.get_rect(topleft=position)
         self.speed = 0
         self.health = ENTITY_HEALTH.get(self.name, 1)  # evita KeyError se nome não existir
+        self.damage = ENTITY_DAMAGE[self.name]
+        self.score = ENTITY_SCORE[self.name]
+        self.last_dmg = 'None'
 
     @abstractmethod
     def move(self):
