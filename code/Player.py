@@ -11,6 +11,10 @@ class Player(Entity):  # Erda os atributos da Entidade
         super().__init__(name, position)
         self.shot_delay = ENTITY_SHOT_DELAY[self.name]
 
+        # 🔊 Carrega som de tiro
+        self.snd_shoot = pygame.mixer.Sound('./assets/snd/shoot.wav')
+        self.snd_shoot.set_volume(0.5)
+
     def move(self):
         pressed_keys = pygame.key.get_pressed()
         if pressed_keys[PLAYER_KEY_UP[self.name]] and self.rect.top > 0:
@@ -29,6 +33,12 @@ class Player(Entity):  # Erda os atributos da Entidade
             self.shot_delay = ENTITY_SHOT_DELAY.get(self.name, 60)
             pressed_keys = pygame.key.get_pressed()
             if pressed_keys[PLAYER_KEY_SHOT[self.name]]:
+                # 🔊 toca o som AQUI, antes de criar o tiro
+                self.snd_shoot.play()
+
+                # reseta o delay e cria o tiro
+                self.shot_delay = ENTITY_SHOT_DELAY[self.name]
+
                 # cria um tiro temporário para pegar a altura do sprite
                 temp_shot = PlayerShot(name=f'{self.name}Shot', position=(0, 0))
 

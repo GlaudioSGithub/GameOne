@@ -15,23 +15,39 @@ from code.Player import Player
 
 
 class Level:
-    def __init__(self, window: Surface, name: str, game_mode: str, player_score: list[int]):
+    def __init__(self, window, name, game_mode, player_score, players=None):
         self.timeout = TIMEOUT_LEVEL
         self.window = window
         self.name = name
         self.game_mode = game_mode
         self.entity_list: list[Entity] = []
+
+        # Background
         self.entity_list.extend(EntityFactory.get_entity(self.name + 'Bg'))
 
-        # Players
-        player = EntityFactory.get_entity('Player1')
-        player.score = player_score[0]
-        self.entity_list.append(player)
+        if players is None:
+            players = {}
 
+            # Player1
+        if 'Player1' in players:
+            player1 = players['Player1']
+        else:
+            player1 = EntityFactory.get_entity('Player1')
+        if player_score['Player1_health'] is not None:
+            player1.health = player_score['Player1_health']
+        self.entity_list.append(player1)
+        players['Player1'] = player1
+
+        # Player2 (se modo 2P)
         if game_mode in [MENU_OPTION[1], MENU_OPTION[2]]:
-           player = EntityFactory.get_entity('Player2')
-           player.score = player_score[1]
-           self.entity_list.append(player)
+            if 'Player2' in players:
+                player2 = players['Player2']
+            else:
+                player2 = EntityFactory.get_entity('Player2')
+            if player_score['Player2_health'] is not None:
+                player2.health = player_score['Player2_health']
+            self.entity_list.append(player2)
+            players['Player2'] = player2
 
         # Enemies
         pygame.time.set_timer(EVENT_ENEMY, SPAWN_TIME)  # Geração od evento
@@ -65,6 +81,15 @@ class Level:
                     self.level_text(14, f'Player1 - Health: {ent.health} | Score: {ent.score}', C_GREEN,(10, 25)) # Texto superior
                 if ent.name == 'Player2':
                     self.level_text(14, f'Player2 - Health: {ent.health} | Score: {ent.score}', C_CYAN, (10, 45))
+
+                for ent in self.entity_list:
+                    if isinstance(ent, Player):
+                        if ent.name == 'Player1':
+                            player_score['Player1'] = ent.score
+                            player_score['Player1_health'] = ent.health
+                        if ent.name == 'Player2':
+                            player_score['Player2'] = ent.score
+                            player_score['Player2_health'] = ent.health
 
             # Check events
             for event in pygame.event.get():

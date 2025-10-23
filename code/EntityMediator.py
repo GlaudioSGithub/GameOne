@@ -1,5 +1,7 @@
 # Quando o inimigo passa da tela ele ainda continua existindo
 # Necessario destrui-lo para não ocupar memoria
+import pygame
+
 from code.Const import WIN_WIDTH
 from code.Enemy import Enemy
 from code.EnemyShot import EnemyShot
@@ -7,8 +9,13 @@ from code.Entity import Entity
 from code.Player import Player
 from code.PlayerShot import PlayerShot
 
+pygame.init()
+pygame.mixer.init()
 
 class EntityMediator:
+    # 🔊 Som de explosão (carregado uma única vez)
+    explosion_snd = pygame.mixer.Sound('./assets/snd/explosion.wav')
+    explosion_snd.set_volume(0.6)
 
     @staticmethod
     def __verify_collision_window(ent: Entity):  # Metodo privado que só funciona aqui dentro
@@ -44,6 +51,7 @@ class EntityMediator:
                     ent1.rect.left <= ent2.rect.right and
                     ent1.rect.bottom >= ent2.rect.top and
                     ent1.rect.top <= ent2.rect.bottom):
+
                 ent1.health -= ent2.damage  # A vida da Ent1 diminui de acordo com o dano da Ent2
                 ent2.health -= ent1.damage
                 # para pontuação
@@ -70,13 +78,26 @@ class EntityMediator:
                 entity2 = entity_list[j]
                 EntityMediator.__verify_collision_entity(entity1, entity2)
 
+    # 💣 Mata as entidades e toca som de explosão
     # Mata as entidades
     @staticmethod
     # def verify_health(entity_list: list[Entity]):
     #     entity_list[:] = [ent for ent in entity_list if ent.health > 0]
     def verify_health(entity_list: list[Entity]):
+        to_remove = []
         for ent in entity_list:
             if ent.health <= 0:
+                # ✅ toca som apenas se for inimigo ou jogador (não para tiros)
+                if isinstance(ent, (Enemy, Player)):
+                    EntityMediator.explosion_snd.play()
+
+                # ✅ dá pontuação se foi inimig
                 if isinstance(ent, Entity):
                     EntityMediator.__give_score(ent, entity_list)
+
+                to_remove.append(ent)
+
+        # Remove todos depois do loop (evita erro de alteração da lista)
+        for ent in to_remove:
+            if ent in entity_list:
                 entity_list.remove(ent)

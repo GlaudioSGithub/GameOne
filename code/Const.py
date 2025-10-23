@@ -2,6 +2,7 @@
 from pickle import EMPTY_TUPLE
 
 import pygame
+from pygame.examples.grid import WINDOW_WIDTH
 
 C_ORANGE = (255, 128, 0)
 C_GREEN = (0, 128, 0)
@@ -10,6 +11,7 @@ C_RED = (255, 0, 0)
 C_YELLOW = (255, 255, 128)
 C_WHITE = (255, 255, 255)
 C_CYAN = (0, 128, 128)
+C_BLACK = (0, 0, 0)
 
 # E
 EVENT_ENEMY = pygame.USEREVENT + 1
@@ -108,8 +110,8 @@ ENTITY_SHOT_DELAY = {
 # m
 MENU_OPTION = ('NEW GAME 1P',
                'NEW GAME 2P - COOPERATIVE',
-               'NEW GAME 2P - COOPERATIVE',
-               'ABOUT GAME',
+               'NEW GAME 2P - COMPETITIVE',
+               'SCORE',
                'EXIT')
 
 # P
@@ -126,6 +128,21 @@ PLAYER_KEY_SHOT = {'Player1': pygame.K_RCTRL,
 
 # S
 SPAWN_TIME = 4000
+SCORE_POS = {
+    'Title': (WINDOW_WIDTH / 2, 50),
+    'EnterName': (WINDOW_WIDTH / 2, 80),
+    'Label': (WINDOW_WIDTH / 2, 90),
+    'Name': (WINDOW_WIDTH / 2, 110),
+    0: (WINDOW_WIDTH / 2, 110),
+    1: (WINDOW_WIDTH / 2, 130),
+    2: (WINDOW_WIDTH / 2, 150),
+    3: (WINDOW_WIDTH / 2, 170),
+    4: (WINDOW_WIDTH / 2, 190),
+    5: (WINDOW_WIDTH / 2, 210),
+    6: (WINDOW_WIDTH / 2, 230),
+}
+
+# T
 TIMEOUT_STEP = 100  # 100ms
 TIMEOUT_LEVEL = 20000  # 20s
 
