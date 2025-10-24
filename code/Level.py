@@ -125,6 +125,16 @@ class Level:
             self.level_text(14, f'entidades: {len(self.entity_list)}', C_WHITE,
                             (10, WIN_HEIGHT - 20))  # Quantidade de imagens no background
             pygame.display.flip()
+
+            # --- Colisão direta entre Player e Enemy ---
+            for ent in self.entity_list:
+                if isinstance(ent, Player):
+                    for enemy in self.entity_list:
+                        if isinstance(enemy, Enemy) and ent.rect.colliderect(enemy.rect):
+                            ent.health -= enemy.damage  # Player recebe dano
+                            enemy.health = 0  # inimigo é destruído na colisão
+                            EntityMediator.explosion_snd.play()  # som da colisão
+
             # Collisions
             EntityMediator.verify_collision(entity_list=self.entity_list)
             EntityMediator.verify_health(entity_list=self.entity_list)

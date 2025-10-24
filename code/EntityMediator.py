@@ -8,6 +8,7 @@ from code.EnemyShot import EnemyShot
 from code.Entity import Entity
 from code.Player import Player
 from code.PlayerShot import PlayerShot
+from code.Explosion import Explosion
 
 pygame.init()
 pygame.mixer.init()
@@ -30,8 +31,11 @@ class EntityMediator:
                 ent.health = 0
 
     @staticmethod
-    def __verify_collision_entity(ent1, ent2):  # Verificação de colisão entre entidades
+    @staticmethod
+    def __verify_collision_entity(ent1, ent2):
         valid_interaction = False
+
+        # 💥 Interações válidas
         if isinstance(ent1, Enemy) and isinstance(ent2, PlayerShot):
             valid_interaction = True
         elif isinstance(ent1, PlayerShot) and isinstance(ent2, Enemy):
@@ -40,6 +44,30 @@ class EntityMediator:
             valid_interaction = True
         elif isinstance(ent1, EnemyShot) and isinstance(ent2, Player):
             valid_interaction = True
+        elif isinstance(ent1, Player) and isinstance(ent2, Enemy):  # 👈 NOVO
+            valid_interaction = True
+        elif isinstance(ent1, Enemy) and isinstance(ent2, Player):  # 👈 NOVO (inverso)
+            valid_interaction = True
+
+        # 🚀 Se for uma interação válida, faz o teste da colisão
+        if valid_interaction:
+            if (ent1.rect.right >= ent2.rect.left and
+                    ent1.rect.left <= ent2.rect.right and
+                    ent1.rect.bottom >= ent2.rect.top and
+                    ent1.rect.top <= ent2.rect.bottom):
+
+                # Dano entre entidades
+                ent1.health -= ent2.damage
+                ent2.health -= ent1.damage
+
+                # Registra quem causou o dano
+                ent1.last_dmg = ent2.name
+                ent2.last_dmg = ent1.name
+
+                # 💣 Se for Player x Enemy, toca som de explosão imediato
+                if (isinstance(ent1, Player) and isinstance(ent2, Enemy)) or \
+                        (isinstance(ent1, Enemy) and isinstance(ent2, Player)):
+                    EntityMediator.explosion_snd.play()
 
         # Perguntas sobre a Colisão
         # A borda Direita de Ent1 está a Direita da borda Esquerda de Ent2?
@@ -91,9 +119,15 @@ class EntityMediator:
                 if isinstance(ent, (Enemy, Player)):
                     EntityMediator.explosion_snd.play()
 
-                # ✅ dá pontuação se foi inimig
+                # ✅ dá pontuação se foi inimigo
                 if isinstance(ent, Entity):
                     EntityMediator.__give_score(ent, entity_list)
+
+                # 💥 Cria imagem de explosão quando o inimigo morre
+                if isinstance(ent, Enemy):
+                    from code.Explosion import Explosion
+                    explosion = Explosion(ent.rect.centerx, ent.rect.centery)
+                    entity_list.append(explosion)
 
                 to_remove.append(ent)
 

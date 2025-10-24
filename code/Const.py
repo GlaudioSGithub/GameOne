@@ -1,6 +1,4 @@
 # C
-from pickle import EMPTY_TUPLE
-
 import pygame
 from pygame.examples.grid import WINDOW_WIDTH
 
@@ -76,7 +74,8 @@ ENTITY_DAMAGE = {
     'Enemy1': 1,
     'Enemy1Shot': 20,
     'Enemy2': 1,
-    'Enemy2Shot': 15
+    'Enemy2Shot': 15,
+    'Explosion': 0
 }
 
 ENTITY_SCORE = {
@@ -97,7 +96,8 @@ ENTITY_SCORE = {
     'Enemy1': 100,
     'Enemy1Shot': 0,
     'Enemy2': 120,
-    'Enemy2Shot': 0
+    'Enemy2Shot': 0,
+    'Explosion': 0,
 }
 
 ENTITY_SHOT_DELAY = {
@@ -144,7 +144,7 @@ SCORE_POS = {
 
 # T
 TIMEOUT_STEP = 100  # 100ms
-TIMEOUT_LEVEL = 20000  # 20s
+TIMEOUT_LEVEL = 60000  # 60s
 
 # W
 WIN_WIDTH = 576
