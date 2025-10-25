@@ -23,15 +23,6 @@ O objetivo é eliminar o maior número possível de inimigos, desviar de projét
 
 
 
-🕹️ Controles
-Ação    Tecla
-Mover para a esquerda    ←
-Mover para a direita    →
-Atirar    Espaço
-Pausar o jogo    Esc
-Confirmar / Avançar    Enter
-
-
 ⚙️ Requisitos
 
 Python 3.10+
