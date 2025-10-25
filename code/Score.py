@@ -13,13 +13,14 @@ class Score:
 
     def __init__(self, window):
         self.window = window
+        # SOUND
+        pygame.mixer_music.load('./assets/snd/Score.mp3')  # Importar musica
         # DRAW IMAGES
         self.surf = pygame.image.load('./assets/img/ScoreBg.png').convert_alpha()  # Carregar o Background
         self.rect = self.surf.get_rect(left=0, top=0)  # Desenhar um retangulo.
         pass
 
     def save(self, game_mode: str, player_score: list[int], name):
-        pygame.mixer_music.load('./assets/snd/Score.mp3')  # Importar musica
         pygame.mixer_music.play(-1)  # Tocar infinito (-1)
         db_proxy = DBProxy('DBScore')
         while True:
@@ -66,23 +67,29 @@ class Score:
         pygame.mixer_music.play(-1)  # Tocar infinito (-1)
         self.window.blit(source=self.surf, dest=self.rect)  # Imagem aparecer no retangulo
         self.score_text(40, 'TOP 10 SCORE', C_YELLOW, SCORE_POS['Title'])
-        self.score_text(15, 'NAME           SCORE                       DATE        ', C_BLUE, SCORE_POS['Label'])
+        self.score_text(15, 'NAME        SCORE              DATE        ', C_BLUE, SCORE_POS['Label'])
+
         db_proxy = DBProxy('DBScore')
         list_score = db_proxy.retrieve_top10()
         db_proxy.close()
 
-        for player_score in list_score:
-            id_, name, score, date = player_score
-            self.score_text(20, f'{name}        {score :05d}        {date}', C_BLACK, SCORE_POS[list_score.index(player_score)])
+        start_y = 110  # posição inicial para a primeira linha
+        line_height = 20  # distância vertical entre linhas
+
+        for idx, player in enumerate(list_score):
+            if idx >= 10:  # mostrar no máximo 10 scores
+                break
+            id_, name, score, date = player
+            pos = (SCORE_POS['Label'][0], start_y + idx * line_height)
+            self.score_text(15, f'{name:4}        {score:05d}        {date}', C_BLACK, pos)
 
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
-                        return
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                    return
             pygame.display.flip()
 
     def score_text(self, text_size: int, text: str, text_color: tuple, text_center_pos: tuple):
