@@ -21,8 +21,8 @@ class Menu:
         while True:
             self.window.blit(source=self.surf, dest=self.rect)  # Imagem aparecer no retangulo
             # Titulo
-            self.menu_text(50, "Mountain", C_ORANGE, ((WIN_WIDTH / 2), 70))  # NOmeio do exixo X na altura de 70
-            self.menu_text(50, "Shooter", C_ORANGE, ((WIN_WIDTH / 2), 120))  # NOmeio do exixo X na altura de 120
+            self.menu_text(50, "Space", C_ORANGE, ((WIN_WIDTH / 2), 70))  # NOmeio do exixo X na altura de 70
+            self.menu_text(50, "Defender", C_ORANGE, ((WIN_WIDTH / 2), 120))  # NOmeio do exixo X na altura de 120
 
             # OPTIONS
             for i in range(len(MENU_OPTION)):
