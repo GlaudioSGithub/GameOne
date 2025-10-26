@@ -1,0 +1,30 @@
+# Controles do Jogo Space Defender
+
+## MENU
+|---------------------|-----------------|
+| Confirmar / Entrar  | ENTER           |
+| Voltar              | ESC             |
+|  (Não cancela jogo) |                 |
+| Selecionar          | Setinhas ↑ e ↓  |
+
+## Player 1
+| Ação                | Tecla           |
+|---------------------|-----------------|
+| Mover para cima     | W               |
+| Mover para baixo    | S               |
+| Mover para esquerda | A               |
+| Mover para direita  | D               |
+| Atirar              | CTLR Esquerdo   |
+
+## Player 2
+| Ação                | Tecla           |
+|---------------------|-----------------|
+| Mover para cima     | Setinha ↑       |
+| Mover para baixo    | Setinha ↓       |
+| Mover para esquerda | Setinha ←       |
+| Mover para direita  | Setinha →       |
+| Atirar              | CTLR Direito    |
+
+## Observações
+- Os dois jogadores podem jogar simultaneamente no mesmo teclado.  
+- Certifique-se de que o foco da janela do jogo está ativo para que as teclas funcionem corretamente.
