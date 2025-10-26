@@ -1,3 +1,5 @@
+import sys
+
 import pygame
 from pygame import Surface, Rect
 from pygame.font import Font
@@ -39,7 +41,7 @@ class Menu:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()  # Close Window
-                    quit()  # end pygame
+                    sys.exit()     # encerra o programa
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_DOWN:  # If is DOWN KEY
                         if menu_option < len(MENU_OPTION) - 1:
