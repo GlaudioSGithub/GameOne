@@ -37,6 +37,9 @@ pip install pygame
 
 ▶️ Como jogar
 
+Dentro da pasta output tem um executável.
+
+
 Execute o arquivo principal:
 
 python main.py
